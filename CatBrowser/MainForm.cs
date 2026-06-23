@@ -2,10 +2,11 @@ using System;
 using System.Windows.Forms;
 using CefSharp;
 using CefSharp.WinForms;
+using System.Drawing;
 
 namespace CatBrowser
 {
-    public partial class MainForm : Form
+    public class MainForm : Form
     {
         private ChromiumWebBrowser browser;
         private readonly string[] catWebsites = new string[]
@@ -26,10 +27,8 @@ namespace CatBrowser
 
         public MainForm()
         {
-            InitializeComponent();
             this.Text = "🐱 Cat Browser";
-            this.Icon = SystemIcons.Application;
-            this.Size = new System.Drawing.Size(1200, 800);
+            this.Size = new Size(1200, 800);
             this.StartPosition = FormStartPosition.CenterScreen;
 
             InitializeCEF();
@@ -41,46 +40,34 @@ namespace CatBrowser
             if (!Cef.IsInitialized)
             {
                 var settings = new CefSettings();
-                settings.BrowserSubprocessPath = System.IO.Path.Combine(
-                    AppDomain.CurrentDomain.BaseDirectory,
-                    "CefSharp.BrowserSubprocess.exe"
-                );
                 Cef.Initialize(settings);
             }
         }
 
         private void CreateUI()
         {
-            // Create main layout
-            var mainPanel = new TableLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                RowCount = 2,
-                ColumnCount = 1
-            };
-
             // Navigation bar
             var navPanel = new Panel
             {
                 Height = 60,
                 Dock = DockStyle.Top,
-                BackColor = System.Drawing.Color.LightBlue
+                BackColor = Color.LightBlue
             };
 
             var label = new Label
             {
                 Text = "🐱 Select a Cat Website:",
                 AutoSize = true,
-                Location = new System.Drawing.Point(10, 15)
+                Location = new Point(10, 15)
             };
 
             var comboBox = new ComboBox
             {
-                Location = new System.Drawing.Point(250, 15),
+                Location = new Point(250, 15),
                 Width = 400,
                 Height = 30,
                 DropDownStyle = ComboBoxStyle.DropDownList,
-                Font = new System.Drawing.Font("Arial", 10)
+                Font = new Font("Arial", 10)
             };
 
             for (int i = 0; i < catWebsites.Length; i++)
@@ -93,7 +80,7 @@ namespace CatBrowser
             var goButton = new Button
             {
                 Text = "Go! 🐾",
-                Location = new System.Drawing.Point(670, 15),
+                Location = new Point(670, 15),
                 Width = 80,
                 Height = 30
             };
