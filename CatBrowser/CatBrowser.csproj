@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CefSharp.WinForms" Version="122.1.120" />
+    <PackageReference Include="CefSharp.WinForms" Version="120.0.0" />
   </ItemGroup>
 
 </Project>
