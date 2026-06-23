@@ -27,14 +27,27 @@ jobs:
       run: dotnet restore CatBrowser/CatBrowser.csproj
       working-directory: .
     
-    - name: Build Release
-      run: dotnet build CatBrowser/CatBrowser.csproj --configuration Release --no-restore
+    - name: Build Release (x86)
+      run: dotnet build CatBrowser/CatBrowser.csproj --configuration Release --no-restore -p:Platform=x86
       working-directory: .
     
-    - name: Publish
-      run: dotnet publish CatBrowser/CatBrowser.csproj -c Release -o CatBrowser/bin/publish
+    - name: Publish (x86)
+      run: dotnet publish CatBrowser/CatBrowser.csproj -c Release -o CatBrowser/bin/publish/x86 -p:Platform=x86
       working-directory: .
     
+    - name: Create Release Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: CatBrowser-Release-x86
+        path: CatBrowser/bin/publish/x86/
+        retention-days: 30
+    
+    - name: Create Release (on tag)
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "CatBrowser/bin/publish/x86/**"
+        token: ${{ secrets.GITHUB_TOKEN }}    
     - name: Create Release Artifact
       uses: actions/upload-artifact@v4
       with:
