@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -9,10 +9,12 @@
     <Product>Cat Browser</Product>
     <Description>A Windows browser exclusively for cat-related websites</Description>
     <Version>1.0.0</Version>
+    <RuntimeIdentifier>win-x86</RuntimeIdentifier>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CefSharp.WinForms" Version="122.0.0" />
+    <PackageReference Include="CefSharp.WinForms" Version="122.1.120" />
   </ItemGroup>
 
 </Project>
