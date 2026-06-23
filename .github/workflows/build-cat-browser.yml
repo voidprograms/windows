@@ -1,0 +1,50 @@
+name: Build Cat Browser
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'CatBrowser/**'
+      - '.github/workflows/build-cat-browser.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'CatBrowser/**'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+    
+    - name: Restore dependencies
+      run: dotnet restore CatBrowser/CatBrowser.csproj
+      working-directory: .
+    
+    - name: Build Release
+      run: dotnet build CatBrowser/CatBrowser.csproj --configuration Release --no-restore
+      working-directory: .
+    
+    - name: Publish
+      run: dotnet publish CatBrowser/CatBrowser.csproj -c Release -o CatBrowser/bin/publish
+      working-directory: .
+    
+    - name: Create Release Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: CatBrowser-Release
+        path: CatBrowser/bin/publish/
+        retention-days: 30
+    
+    - name: Create Release (on tag)
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "CatBrowser/bin/publish/**"
+        token: ${{ secrets.GITHUB_TOKEN }}
