@@ -4,7 +4,6 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net481</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
-    <ApplicationIcon>cat.ico</ApplicationIcon>
     <Company>VoidPrograms</Company>
     <Product>Cat Browser</Product>
     <Description>A Windows browser exclusively for cat-related websites</Description>
